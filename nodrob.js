@@ -1,7 +1,5 @@
 var cheerio = require("cheerio");
 
-
-
 var url = require('url');
 qs = require('querystring');
 
@@ -55,7 +53,7 @@ var server = http.createServer(function(req, res) {
     
 });
  
-var port = 8080;
+var port = process.env.PORT || 3000;
 server.listen(port, function() {
     console.log('server listening on port ' + port);
 });
