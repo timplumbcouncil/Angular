@@ -1,0 +1,32 @@
+<PetrolPrices>
+<Fuel type="Super Unleaded">
+<Highest units="p">139.9</Highest>
+<Average units="p">110.5</Average>
+<Lowest units="p">104.9</Lowest>
+</Fuel>
+<Fuel type="Unleaded">
+<Highest units="p">119.9</Highest>
+<Average units="p">102.2</Average>
+<Lowest units="p">99.7</Lowest>
+</Fuel>
+<Fuel type="LRP">
+<Highest units="p">117.9</Highest>
+<Average units="p">122.9</Average>
+<Lowest units="p">117.9</Lowest>
+</Fuel>
+<Fuel type="Premium Diesel">
+<Highest units="p">130.9</Highest>
+<Average units="p">118.6</Average>
+<Lowest units="p">108.9</Lowest>
+</Fuel>
+<Fuel type="Diesel">
+<Highest units="p">127.9</Highest>
+<Average units="p">106.0</Average>
+<Lowest units="p">99.9</Lowest>
+</Fuel>
+<Fuel type="LPG">
+<Highest units="p">61.9</Highest>
+<Average units="p">51.7</Average>
+<Lowest units="p">47.7</Lowest>
+</Fuel>
+</PetrolPrices>

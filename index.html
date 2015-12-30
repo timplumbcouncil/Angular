@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="js/angular.min.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/xml2json.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container central">
+
+   <div ng-app="mpgApp" ng-controller="mpgController">
+
+    <div class="col-sm-12 ">
+     <!-- <h1>Car economy comparison</h1>
+      <p>Your daily distance:</p>-->
+      <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Miles</span>
+       <input type="text" class="form-control" ng-model="distance1" placeholder="40" aria-describedby="basic-addon1">
+
+     </div>
+
+
+
+   </div>
+   <div class="col-sm-6 ">
+
+
+   <!-- <h2>Car 1 </h2>-->
+    <div class="input-group">
+      <span class="input-group-addon" id="sizing-addon2">MPG</span>
+      <input type="text" class="form-control" ng-model="mpg1" placeholder="40" aria-describedby="sizing-addon2">
+    </div>
+
+    <div class="input-group">
+      <span class="input-group-addon" id="sizing-addon2">Fuel price (pence)</span>
+      <input type="text" class="form-control" ng-model="fuel1" placeholder="105" aria-describedby="sizing-addon2">
+    </div>
+
+
+    <p>{{ ppm() }} pence per mile.  </p>
+    <p>Commute cost &pound;{{ commuteCost() }}</p>
+    <p>Annual cost &pound;{{ annaulCost() }} </p>
+  </div>
+  <div class="col-sm-6">
+    <!--<h2>Car 2 </h2>-->
+    <div class="input-group">
+      <span class="input-group-addon" id="sizing-addon2">MPG</span>
+      <input type="text" class="form-control" ng-model="mpg2" placeholder="40" aria-describedby="sizing-addon2">
+    </div>
+
+    <div class="input-group">
+      <span class="input-group-addon" id="sizing-addon2">Fuel price (pence)</span>
+      <input type="text" class="form-control" ng-model="fuel2" placeholder="105" aria-describedby="sizing-addon2">
+    </div>
+    <p>{{ ppm2() }} pence per mile.  </p>
+    <p>Commute cost &pound;{{ commuteCost2() }}</p>
+    <p>Annual cost &pound;{{ annaulCost2() }} </p>
+  </div>
+  <div class="col-sm-12 central">
+    <h3>Annually Car 1 is {{ differenceType() }} by &pound;{{ difference() }} than Car 2.</h3>
+  </div>
+</div>
+</div>
+
+
+<script>
+
+
+
+angular.module('mpgApp', [])
+.controller('mpgController', function($scope, $http) {
+
+   var x2js = new X2JS();   
+
+   $http.get("petrolprices.xml")
+    .then(function(response) { 
+      var jsonObj = x2js.xml_str2json(response.data);
+      console.log(jsonObj.PetrolPrices.Fuel["Type"]);
+    });
+
+  $scope.ppm = function() {
+    ppm =  $scope.fuel1 / ($scope.mpg1 / 4.54609)
+    if (isNaN(ppm)) {ppm = 0}
+      return parseFloat(ppm).toFixed(2); 
+  };
+  $scope.ppm2 = function() {
+    ppm2 =  $scope.fuel2 / ($scope.mpg2 / 4.54609)
+    if (isNaN(ppm2)) {ppm2 = 0}
+      return parseFloat(ppm2).toFixed(2); 
+  };
+
+  $scope.commuteCost = function() {
+    commute = ppm * $scope.distance1 / 100
+    if (isNaN(commute)) {commute = 0}
+      return parseFloat(commute).toFixed(2); 
+  };
+
+  $scope.commuteCost2 = function() {
+    commute2 = ppm2 * $scope.distance1 / 100
+    if (isNaN(commute2)) {commute2 = 0}
+      return parseFloat(commute2).toFixed(2); 
+  };
+
+  $scope.annaulCost = function() {
+    annualCost = 253 * commute
+    return parseFloat(253 * commute).toFixed(2); 
+  };
+
+  $scope.annaulCost2 = function() {
+    annualCost2 = 253 * commute2
+    return parseFloat(253 * commute2).toFixed(2); 
+  };
+
+  $scope.differenceType = function() {
+    if (annualCost > annualCost2 ) { return "more expensive"} else {return "cheaper"}
+  };
+
+  $scope.difference = function() {
+    return Math.abs(parseFloat(annualCost - annualCost2 ).toFixed(2))
+  };
+
+});
+
+</script>
+
+</body>
+</html>
